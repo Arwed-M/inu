@@ -1,0 +1,8 @@
+general: 
+  appBar: "Flutter Demo Hauptseite"
+  appTitle: "Flutter Demonstration"
+
+mainPage: 
+  buttonCounterMsg: "Du hast den Button so oft gedrückt"
+  increment: "Inkrement"
+

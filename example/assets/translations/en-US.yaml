@@ -1,0 +1,7 @@
+general:
+  appBar: Flutter Demo Home Page
+  appTitle: Flutter Demo
+
+mainPage:
+  buttonCounterMsg: "You have pushed the button this many times:"
+  increment: Increment
