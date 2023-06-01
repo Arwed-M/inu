@@ -1,7 +1,7 @@
 name: neko
 description: A localization tool for Flutter apps based on class generation.
 version: 0.0.1
-homepage:
+homepage: https://github.com/Arwed-M/neko
 
 environment:
   sdk: '>=2.19.5 <3.0.0'
