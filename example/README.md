@@ -13,8 +13,8 @@ and the Flutter guide for
 
 ## Usage
 
-First generate the Neko classes with:
-```dart run neko:init```
+First generate the Inu classes with:
+```dart run inu:init```
 
 Then run the example:
 ```flutter run```

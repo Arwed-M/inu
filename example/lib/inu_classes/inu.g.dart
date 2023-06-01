@@ -1,23 +1,22 @@
 /// en-US
 /// *****************************************************
 /// GENERATED CODE - DO NOT MODIFY BY HAND
-/// run 'just neko' or 'dart run neko:gen_classes' in the root directory of your project
+/// run 'just inu' or 'dart run inu:gen_classes' in the root directory of your project
 /// *****************************************************
 
-abstract class Neko {
-  GeneralNeko get general => const GeneralNeko();
-  MainPageNeko get mainPage => const MainPageNeko();
+abstract class Inu {
+  GeneralInu get general => const GeneralInu();
+  MainPageInu get mainPage => const MainPageInu();
 }
 
-class GeneralNeko {
-  const GeneralNeko();
+class GeneralInu {
+  const GeneralInu();
   String get appBar => "Flutter Demo Home Page";
   String get appTitle => "Flutter Demo";
 }
 
-class MainPageNeko {
-  const MainPageNeko();
+class MainPageInu {
+  const MainPageInu();
   String get buttonCounterMsg => "You have pushed the button this many times";
   String get increment => "Increment";
 }
-

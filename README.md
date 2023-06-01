@@ -11,47 +11,47 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
-# Neko
+# Inu 🐕
 
 ## Features
 
-**Neko** is a simple localization tool for Flutter applications. It's based on a class generation from structured YAML files containing all Strings for the application. 
+**Inu** is a simple localization tool for Flutter applications. It's based on a class generation from structured YAML files containing all Strings for the application. 
 
 A locale class is generated from every locale file.  
-Once generated, you can access the Strings from a **Neko** class instance.
+Once generated, you can access the Strings from a **Inu** class instance.
 
 ## Getting started
 
 All localization files should have the same [YAML-Map structure](#structure-of-locale-files). The value of each key should contain the translated String for each language.
 
 - place all your localization files in a directory ```assets/translations/```
-- add **Neko** to your dependencies in your Flutter app with ```flutter pub add neko```
-- run ```dart run neko:init``` to generate the locale classes for the first time
+- add **Inu** to your dependencies in your Flutter app with ```flutter pub add inu```
+- run ```dart run inu:init``` to generate the locale classes for the first time
 
 ## Usage
 
-**Neko** creates an abstract class called **Neko**, which every other locale class implements. This class is generated from the main language used during development (most likely English). 
+**Inu** creates an abstract class called **Inu**, which every other locale class implements. This class is generated from the main language used during development (most likely English). 
 
-If you dont provide any translations, the Strings from the **Neko** class are used as a "fallback locale".
+If you dont provide any translations, the Strings from the **Inu** class are used as a "fallback locale".
 
 If you have added more Strings to your locale files you can run 
 ```sh
-dart run neko:gen_classes
+dart run inu:gen_classes
 ``` 
 or 
 ```sh
-just neko
+just inu
 ``` 
 if you use [just](https://github.com/casey/just).  
 
-**Neko** checks the locale files for completeness during the generation process. Once it discovers Strings that aren't translated, you can translate them right away in the terminal prompt or skip the process.
+**Inu** checks the locale files for completeness during the generation process. Once it discovers Strings that aren't translated, you can translate them right away in the terminal prompt or skip the process.
 
-Once the classes have been generated, you can move on by using an instance of **Neko** as a Container for all your Strings.  
+Once the classes have been generated, you can move on by using an instance of **Inu** as a Container for all your Strings.  
 
 You can write a method like this and store the returned value as a global variable or within a state management system like [get_it](https://pub.dev/packages/get_it):
 
 ```dart
-Neko chooseLocale() {
+Inu chooseLocale() {
   final String langCode =
       Locale(Platform.localeName).languageCode.replaceAll('_', '-');
 
@@ -75,13 +75,13 @@ namedArguments: Hello, my name is {firstname} {surname}
 Then use the ```tr()``` extention like this:
 
 ```dart
-Text(neko.arguments).tr(['letters', 'numbers']);
-String greeting = neko.namedArguments.tr(namedArgs: { 
+Text(inu.arguments).tr(['letters', 'numbers']);
+String greeting = inu.namedArguments.tr(namedArgs: { 
     'firstname' : 'Ryan',
     'surname' : 'Stecken'});
 ```
 
-Checkout the [Example](https://pub.dev/packages/neko/example) for a translated version of the Flutter demo app!
+Checkout the [Example](https://pub.dev/packages/inu/example) for a translated version of the Flutter demo app!
 
 ## Structure of locale files
 

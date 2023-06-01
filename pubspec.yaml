@@ -1,10 +1,10 @@
-name: neko
+name: inu
 description: A localization tool for Flutter apps based on class generation.
 version: 0.0.1
-homepage: https://github.com/Arwed-M/neko
+homepage: https://github.com/Arwed-M/inu
 
 environment:
-  sdk: '>=2.19.5 <3.0.0'
+  sdk: '>=2.19.5 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:

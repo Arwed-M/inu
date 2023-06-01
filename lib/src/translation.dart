@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:neko/src/locale_generator.dart';
+import 'package:inu/src/locale_generator.dart';
 import 'package:yaml_mapper/yaml_mapper.dart';
 
 Map<String, dynamic> translate(

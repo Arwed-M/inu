@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import 'neko_classes/de-DE.g.dart';
-import 'neko_classes/en-US.g.dart';
-import 'neko_classes/neko.g.dart';
+import 'inu_classes/de-DE.g.dart';
+import 'inu_classes/en-US.g.dart';
+import 'inu_classes/inu.g.dart';
 
-late final Neko neko;
+late final Inu inu;
 
-Neko chooseLocale() {
+Inu chooseLocale() {
   final String langCode =
       Locale(Platform.localeName).languageCode.replaceAll('_', '-');
 
@@ -29,14 +29,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    neko = chooseLocale();
+    inu = chooseLocale();
     return MaterialApp(
-      title: neko.general.appTitle,
+      title: inu.general.appTitle,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MyHomePage(title: neko.general.appBar),
+      home: MyHomePage(title: inu.general.appBar),
     );
   }
 }
@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              neko.mainPage.buttonCounterMsg,
+              inu.mainPage.buttonCounterMsg,
             ),
             Text(
               '$_counter',
@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
-        tooltip: neko.mainPage.increment,
+        tooltip: inu.mainPage.increment,
         child: const Icon(Icons.add),
       ),
     );

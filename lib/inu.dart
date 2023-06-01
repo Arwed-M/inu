@@ -1,3 +1,3 @@
-library neko;
+library inu;
 
 export 'src/extensions.dart';

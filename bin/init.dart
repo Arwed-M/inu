@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:neko/src/gen_locale.dart';
-import 'package:neko/src/locale_generator.dart';
+import 'package:inu/src/gen_locale.dart';
+import 'package:inu/src/locale_generator.dart';
 import 'package:path/path.dart';
 
 import 'gen_classes.dart';
@@ -12,11 +12,11 @@ void addJustFileEntry(File file) {
   String content = '';
 
   for (var line in lines) {
-    if (line.contains('neko:')) return;
+    if (line.contains('inu:')) return;
     content += '$line\n';
   }
 
-  content += '\nneko:\n  dart run neko:gen_classes';
+  content += '\ninu:\n  dart run inu:gen_classes';
   file.writeAsStringSync(content);
 }
 
@@ -57,15 +57,15 @@ void _genClasses() {
     return;
   }
 
-  Directory('lib/neko_classes').create();
+  Directory('lib/inu_classes').create();
 
-  // generate Neko superclass
-  final LocaleGenerator neko = genLocale(
+  // generate Inu superclass
+  final LocaleGenerator inu = genLocale(
       superClass: true,
       localeCode: fileNames[answer].replaceFirst('.yaml', ''));
 
-  // build locale class for every localization file that extends Neko
-  regenClasses(superClass: neko);
+  // build locale class for every localization file that extends Inu
+  regenClasses(superClass: inu);
 }
 
 List<String> _getLocalFileNames() {
@@ -80,11 +80,11 @@ List<String> _getLocalFileNames() {
   return files;
 }
 
-void initNeko() {
+void initInu() {
   _genClasses();
   _editJustFile();
 }
 
 void main() {
-  initNeko();
+  initInu();
 }

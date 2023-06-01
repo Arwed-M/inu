@@ -19,9 +19,9 @@ class LocaleGenerator {
 
   /// generate a new class from a [Map<String, dynamic>]
   void genClass(List<String> path, Map<String, dynamic> map) {
-    final String superClassName = "${_capitalize(path.last)}Neko";
+    final String superClassName = "${_capitalize(path.last)}Inu";
     final String className =
-        "${!superClass ? '_' : ''}${_capitalize(path.last)}${!superClass ? localeCodeCap : 'Neko'}";
+        "${!superClass ? '_' : ''}${_capitalize(path.last)}${!superClass ? localeCodeCap : 'Inu'}";
     String newClass =
         "class $className ${!superClass ? 'extends $superClassName ' : ''}{\n  const $className();\n";
 
@@ -42,7 +42,7 @@ class LocaleGenerator {
 
     String genNullLine() => path!.isEmpty
         ? "  String get $key => ${_capitalize(localeCodeCap)}().$key;\n"
-        : "  String get $key => const ${_capitalize(path.last)}Neko().$key;\n";
+        : "  String get $key => const ${_capitalize(path.last)}Inu().$key;\n";
 
     switch (type) {
       case 'String':
@@ -57,7 +57,7 @@ class LocaleGenerator {
         path.add(key);
         genClass(List.from(path), value);
         final String className =
-            "${!superClass ? '_' : ''}${_capitalize(key)}${!superClass ? localeCodeCap : 'Neko'}";
+            "${!superClass ? '_' : ''}${_capitalize(key)}${!superClass ? localeCodeCap : 'Inu'}";
         return "  $className get $key => const $className();\n";
 
       case 'Null':
@@ -69,12 +69,12 @@ class LocaleGenerator {
 
   /// generate a Locale class from a YAML file
   void _genLocale(Map<String, dynamic> yaml) {
-    final String nekoHeader =
-        "/// $localeCode\n/// *****************************************************\n/// GENERATED CODE - DO NOT MODIFY BY HAND\n/// run 'just neko' or 'dart run neko:gen_classes' in the root directory of your project\n/// *****************************************************\n\nabstract class Neko {\n";
+    final String inuHeader =
+        "/// $localeCode\n/// *****************************************************\n/// GENERATED CODE - DO NOT MODIFY BY HAND\n/// run 'just inu' or 'dart run inu:gen_classes' in the root directory of your project\n/// *****************************************************\n\nabstract class Inu {\n";
     final String localeHeader =
-        "// ignore_for_file: annotate_overrides\nimport 'neko.g.dart';\n\n/// *****************************************************\n/// GENERATED CODE - DO NOT MODIFY BY HAND\n/// run 'just neko' or 'dart run neko:gen_classes' in the root directory of your project\n/// *****************************************************\n\nclass $localeCodeCap implements Neko {\n";
+        "// ignore_for_file: annotate_overrides\nimport 'inu.g.dart';\n\n/// *****************************************************\n/// GENERATED CODE - DO NOT MODIFY BY HAND\n/// run 'just inu' or 'dart run inu:gen_classes' in the root directory of your project\n/// *****************************************************\n\nclass $localeCodeCap implements Inu {\n";
 
-    generatedClass += superClass ? nekoHeader : localeHeader;
+    generatedClass += superClass ? inuHeader : localeHeader;
 
     yaml.keys.map((topic) {
       return generatedClass += _genAttribute(topic, yaml);

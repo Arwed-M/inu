@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:neko/src/locale_generator.dart';
+import 'package:inu/src/locale_generator.dart';
 import 'package:yaml_mapper/yaml_mapper.dart';
 
 LocaleGenerator genLocale(
@@ -12,9 +12,9 @@ LocaleGenerator genLocale(
 
   final locale = LocaleGenerator(parseMap(lines, indentMarker),
       localeCode: localeCode, superClass: superClass);
-  createClassFile(!superClass ? localeCode : 'neko', locale.generatedClass);
+  createClassFile(!superClass ? localeCode : 'inu', locale.generatedClass);
   return locale;
 }
 
 void createClassFile(String className, String content) =>
-    File('lib/neko_classes/$className.g.dart').writeAsStringSync(content);
+    File('lib/inu_classes/$className.g.dart').writeAsStringSync(content);

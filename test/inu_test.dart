@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:neko/src/completeness_check.dart';
-import 'package:neko/src/locale_generator.dart';
+import 'package:inu/src/completeness_check.dart';
+import 'package:inu/src/locale_generator.dart';
 import 'package:yaml_mapper/yaml_mapper.dart';
 
 void main() {
@@ -45,14 +45,13 @@ end: das ist das Ende
     });
 
     group('Class generation', () {
-      final neko =
-          LocaleGenerator(mapEN, localeCode: 'en-US', superClass: true);
+      final inu = LocaleGenerator(mapEN, localeCode: 'en-US', superClass: true);
 
       final Map<String, dynamic> mapDE = parseMap(yamlStrDE.split('\n'), '  ');
       final localeDE = LocaleGenerator(mapDE, localeCode: 'de-DE');
 
       test('Superclass', () {
-        expect(neko.keys, [
+        expect(inu.keys, [
           'title',
           'section1.undersection1.key1',
           'section1.undersection1.key2',
@@ -64,7 +63,7 @@ end: das ist das Ende
 
       test('Uncomplete locale class', () {
         expect(
-            findMissingKeys(neko, localeDE).toList(), ['section1.anotherKey']);
+            findMissingKeys(inu, localeDE).toList(), ['section1.anotherKey']);
       });
     });
   });

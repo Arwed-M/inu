@@ -1,5 +1,5 @@
 name: example
-description: An example for using Neko.
+description: An example for using Inu.
 
 publish_to: 'none' 
 
@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  neko:
+  inu:
     path: ../
 
 dev_dependencies:

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:neko/src/gen_locale.dart';
+import 'package:inu/src/gen_locale.dart';
 import 'package:yaml_mapper/yaml_mapper.dart';
 
 import 'locale_generator.dart';
