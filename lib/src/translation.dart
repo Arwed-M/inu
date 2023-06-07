@@ -1,17 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:inu/src/locale_generator.dart';
 import 'package:yaml_mapper/yaml_mapper.dart';
 
 Map<String, dynamic> translate(
-    List<String> missingKeyPath, String text, LocaleGenerator locale) {
+    List<String> missingKeyPath, String text, Map<String, dynamic> map) {
   print("\nTranslation for \"$text\":");
   String? translation = stdin.readLineSync(encoding: utf8);
   if (translation == null) {
     print("Please provide an utf-8 formatted String!\nAborting ...");
-    return locale.yaml;
+    return map;
   }
 
-  return addPathToMap(locale.yaml, missingKeyPath, translation);
+  return addPathToMap(map, missingKeyPath, translation);
 }

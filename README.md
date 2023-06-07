@@ -15,24 +15,24 @@ and the Flutter guide for
 
 ## Features
 
-**Inu** is a simple localization tool for Flutter applications. It's based on a class generation from structured YAML files containing all Strings for the application. 
+**Inu** is a simple localization tool for Flutter applications. It's based on class generation from structured YAML files containing all Strings for the application. 
 
 A locale class is generated from every locale file.  
-Once generated, you can access the Strings from a **Inu** class instance.
+Once generated, you can access the Strings from an **Inu** inheriting class instance.
 
 ## Getting started
 
-All localization files should have the same [YAML-Map structure](#structure-of-locale-files). The value of each key should contain the translated String for each language.
+All localization files should have the same [YAML-map structure](#structure-of-locale-files). The value of each key should contain the translated String for each language.
 
-- place all your localization files in a directory ```assets/translations/```
+- place all your localization files in the directory ```assets/translations/```
 - add **Inu** to your dependencies in your Flutter app with ```flutter pub add inu```
 - run ```dart run inu:init``` to generate the locale classes for the first time
 
 ## Usage
 
-**Inu** creates an abstract class called **Inu**, which every other locale class implements. This class is generated from the main language used during development (most likely English). 
+**Inu** creates an abstract class called **Inu**, which every other locale class implements. This class is generated from the main language used during development. 
 
-If you dont provide any translations, the Strings from the **Inu** class are used as a "fallback locale".
+If you don't provide any translations, the Strings from the **Inu** class are used (like a "fallback locale").
 
 If you have added more Strings to your locale files you can run 
 ```sh

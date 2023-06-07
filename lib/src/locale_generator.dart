@@ -1,7 +1,8 @@
 class LocaleGenerator {
   final bool superClass;
-  List<String> classes = []; // addittionally created classes for nested keys
-  List<String> keys = []; // every single keyPath
+  Set<String> classes = {}; // addittionally created classes for nested keys
+  Set<String> keys = {}; // every keyPath except ones w/ null value
+  Set<String> nullKeys = {}; // keyPaths for keys w/ null values
   final Map<String, dynamic> yaml; // parsed YAML asset
   final String localeCode;
   late final String localeCodeCap; // language and country code
@@ -42,15 +43,14 @@ class LocaleGenerator {
 
     String genNullLine() => path!.isEmpty
         ? "  String get $key => ${_capitalize(localeCodeCap)}().$key;\n"
-        : "  String get $key => const ${_capitalize(path.last)}Inu().$key;\n";
+        : "  String get $key => const ${_capitalize(path[path.length - 2])}Inu().$key;\n";
 
     switch (type) {
       case 'String':
         value = value.trim();
-
+        path.add(key);
         if (value.isEmpty) return genNullLine();
 
-        path.add(key);
         keys.add(path.join('.'));
         return "  String get $key => \"$value\";\n";
       case '_Map<String, dynamic>':
@@ -61,6 +61,8 @@ class LocaleGenerator {
         return "  $className get $key => const $className();\n";
 
       case 'Null':
+        path.add(key);
+        nullKeys.add(path.join('.'));
         return genNullLine();
       default:
         return "";

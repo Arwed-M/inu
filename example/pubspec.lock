@@ -195,10 +195,10 @@ packages:
     dependency: transitive
     description:
       name: yaml_mapper
-      sha256: "728e9523a675035db6566ea9d21f67a23f180bd6ad53fe731d5804c4ed840760"
+      sha256: "5734e07d2d750c6bf68172320f2872311c3a920ffb13a7652a19718894fcaf17"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.2"
+    version: "0.0.4"
 sdks:
   dart: ">=3.0.1 <4.0.0"
   flutter: ">=1.17.0"
