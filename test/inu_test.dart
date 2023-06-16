@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:inu/src/completeness_check.dart';
 import 'package:inu/src/locale_generator.dart';
+import 'package:inu/src/extensions.dart';
+
 import 'package:yaml_mapper/yaml_mapper.dart';
 
 void main() {
@@ -31,7 +33,7 @@ section2:
 end: das ist das Ende
 """;
 
-  group("YAML parsing", () {
+  group("inu tests", () {
     final List<String> yamlLinesEN = yamlStrEN.split('\n');
     final Map<String, dynamic> mapEN =
         parseMap(yamlLinesEN, determineWhitespace(yamlLinesEN));
@@ -65,6 +67,17 @@ end: das ist das Ende
         expect(
             findMissingKeys(inu, localeDE).toList(), ['section1.anotherKey']);
       });
+    });
+
+    test('String insertion tests', () {
+      const String str1 = "I like {}, because it's so {}.";
+      const String str2 =
+          "My favourite color is {color}, beacause I am {views}.";
+
+      expect(str1.tr(args: ['Dart', 'simple']),
+          "I like Dart, because it's so simple.");
+      expect(str2.tr(namedArgs: {'color': 'blue', 'views': 'based'}),
+          "My favourite color is blue, beacause I am based.");
     });
   });
 }
