@@ -34,14 +34,16 @@ All localization files should have the same [YAML-map structure](#structure-of-l
 
 If you don't provide any translations, the Strings from the **Inu** class are used (like a "fallback locale").
 
+### Class Generation  
+
 If you have added more Strings to your locale files you can run 
 ```sh
 dart run inu:gen_classes
-``` 
+```
 or 
 ```sh
 just inu
-``` 
+```
 if you use [just](https://github.com/casey/just).  
 
 **Inu** checks the locale files for completeness during the generation process. Once it discovers Strings that aren't translated, you can translate them right away in the terminal prompt or skip the process.
@@ -64,7 +66,9 @@ Inu chooseLocale() {
 }
 ```
 
-You can also use arguments in form of a ```List<String>``` or named arguments with a ```Map<String, String>``` with the ```String``` and ```Text()``` extention ```tr()```.  
+### String insertion  
+
+You can also use arguments in form of a ```List<String>``` or named arguments with a ```Map<String, String>``` with the ```String``` and ```Text()``` extension ```tr()```.  
 Simply add curly braces to your String value in your locale files like this:
 
 ```yaml
@@ -72,10 +76,10 @@ arguments: this String contains {} and {}
 namedArguments: Hello, my name is {firstname} {surname}
 ```
 
-Then use the ```tr()``` extention like this:
+Then use the ```tr()``` extensions like this:
 
 ```dart
-Text(inu.arguments).tr(['letters', 'numbers']);
+Text(inu.arguments).tr(args: ['funny', 'words']);
 String greeting = inu.namedArguments.tr(namedArgs: { 
     'firstname' : 'Ryan',
     'surname' : 'Stecken'});
@@ -87,9 +91,8 @@ Checkout the [Example](https://pub.dev/packages/inu/example) for a translated ve
 
 You should structure your files in form of a simple map (no lists or plain text). The map structure has to be the same for all files.
 
-### Example
 
-#### English locale file
+### English locale file
 
 ```yaml
 title: app
@@ -107,7 +110,7 @@ section2:
 end: this is the end
 ```
 
-#### German locale file
+### German locale file
 
 ```yaml
 title: App

@@ -26,9 +26,11 @@ void _editJustFile() => Directory('.').list(followLinks: false).map((file) {
 
 void _genClasses() {
   if (!Directory('assets/translations').existsSync()) {
+    Directory('assets').create();
     Directory('assets/translations').create();
+
     print(
-        "Please provide your Locale files in the directory 'assets/translations/'");
+        "No locale files found yet. Please provide your Locale files in the directory 'assets/translations/'");
     return;
   }
 
@@ -39,30 +41,36 @@ void _genClasses() {
     return;
   }
 
-  print("\nFound the following Locale files:\n");
+  int defaultLocaleNum = 0;
 
-  final Map<int, String> filesMap = fileNames.asMap();
-  filesMap.forEach((index, file) => print("($index) $file"));
+  if (fileNames.length > 1) {
+    print("\nFound the following Locale files:\n");
 
-  print("\nSelect a default Locale containing all Strings:");
+    final Map<int, String> filesMap = fileNames.asMap();
+    filesMap.forEach((index, file) => print("($index) $file"));
 
-  String? answerStr = stdin.readLineSync(encoding: utf8);
+    print("\nSelect a default Locale containing all Strings:");
 
-  if (answerStr == null) return;
+    String? answerStr = stdin.readLineSync(encoding: utf8);
 
-  int answer = int.parse(answerStr);
+    if (answerStr == null) return;
 
-  if (!filesMap.containsKey(answer)) {
-    print("Input not in range.");
-    return;
+    defaultLocaleNum = int.parse(answerStr);
+
+    if (!filesMap.containsKey(defaultLocaleNum)) {
+      print("Input not in range.");
+      return;
+    }
   }
+
+  print("selected locale: ${fileNames[defaultLocaleNum]}");
 
   Directory('lib/inu_classes').create();
 
   // generate Inu superclass
   final LocaleGenerator inu = genLocale(
       superClass: true,
-      localeCode: fileNames[answer].replaceFirst('.yaml', ''));
+      localeCode: fileNames[defaultLocaleNum].replaceFirst('.yaml', ''));
 
   // build locale class for every localization file that extends Inu
   regenClasses(superClass: inu);
