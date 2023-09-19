@@ -28,8 +28,8 @@ void regenClasses({LocaleGenerator? superClass}) {
   Directory('assets/translations').list(followLinks: false).map((file) {
     final String fileName = basename(file.path);
     if (fileName.contains('.yaml')) {
-      final locale = genLocale(localeCode: fileName.replaceAll('.yaml', ''));
-      checkCompleteness(superClass!, locale);
+      checkCompleteness(
+          superClass!, genLocale(localeCode: fileName.replaceAll('.yaml', '')));
     }
   }).toList();
 }
