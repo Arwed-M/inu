@@ -1,9 +1,11 @@
+typedef Yaml = Map<String,dynamic>;
+
 class LocaleGenerator {
   final bool superClass;
   Set<String> classes = {}; // addittionally created classes for nested keys
   Set<String> keys = {}; // every keyPath except ones w/ null value
   Set<String> nullKeys = {}; // keyPaths for keys w/ null values
-  final Map<String, dynamic> yaml; // parsed YAML asset
+  final Yaml yaml; // parsed YAML asset
   final String localeCode;
   late final String localeCodeCap; // language and country code
   String generatedClass = "";
@@ -19,7 +21,7 @@ class LocaleGenerator {
       : val.toUpperCase();
 
   /// generate a new class from a [Map<String, dynamic>]
-  void genClass(List<String> path, Map<String, dynamic> map) {
+  void genClass(List<String> path, Yaml map) {
     final String superClassName = "${_capitalize(path.last)}Inu";
     final String className =
         "${!superClass ? '_' : ''}${_capitalize(path.last)}${!superClass ? localeCodeCap : 'Inu'}";
@@ -35,7 +37,7 @@ class LocaleGenerator {
   }
 
   /// generate the attributes of a class based on the type of the YAML key
-  String _genAttribute(String key, Map<String, dynamic> map,
+  String _genAttribute(String key, Yaml map,
       {List<String>? path}) {
     path ??= [];
     dynamic value = map[key];
@@ -70,7 +72,7 @@ class LocaleGenerator {
   }
 
   /// generate a Locale class from a YAML file
-  void _genLocale(Map<String, dynamic> yaml) {
+  void _genLocale(Yaml yaml) {
     final String inuHeader =
         "/// $localeCode\n/// *****************************************************\n/// GENERATED CODE - DO NOT MODIFY BY HAND\n/// run 'just inu' or 'dart run inu:gen_classes' in the root directory of your project\n/// *****************************************************\n\nabstract class Inu {\n";
     final String localeHeader =
