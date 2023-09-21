@@ -1,9 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:inu/src/completeness_check.dart';
-import 'package:inu/src/locale_generator.dart';
 import 'package:inu/src/extensions.dart';
 
 import 'package:yaml_mapper/yaml_mapper.dart';
+
+import '../bin/completeness_check.dart';
+import '../bin/locale_generator.dart';
 
 void main() {
   const String yamlStrEN = """

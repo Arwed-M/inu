@@ -3,11 +3,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:inu/src/gen_locale.dart';
+import 'package:inu/src/translation.dart';
 import 'package:yaml_mapper/yaml_mapper.dart';
 
+import 'constants.dart';
 import 'locale_generator.dart';
-import 'translation.dart';
 
 void checkCompleteness(LocaleGenerator superLocale, LocaleGenerator locale) {
   Set<String> missingKeys = findMissingKeys(superLocale, locale);
@@ -52,9 +52,12 @@ Yaml _addMissingKeysToYaml(Set<String> missingKeys, Yaml yaml, Yaml superYaml,
 
 void _genLocalization(Yaml yaml, String localeCode) {
   final locale = LocaleGenerator(yaml, localeCode: localeCode);
-  createClassFile(locale.localeCode, locale.generatedClass);
+  _createClassFile(locale.localeCode, locale.localeCode);
   writeYAML(locale.yaml, 'assets/translations/${locale.localeCode}.yaml');
 }
+
+void _createClassFile(String className, String contents) =>
+    Locations.classFile(className).writeAsStringSync(contents);
 
 /// Finds all keys that aren't translated in the locale files
 Set<String> findMissingKeys(

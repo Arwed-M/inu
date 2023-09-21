@@ -1,11 +1,15 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:inu/src/gen_locale.dart';
-import 'package:inu/src/locale_generator.dart';
 import 'package:path/path.dart';
 
+import 'constants.dart';
+import 'extensions.dart';
 import 'gen_classes.dart';
+import 'gen_locale.dart';
+import 'locale_generator.dart';
 
 void addJustFileEntry(File file) {
   List<String> lines = file.readAsLinesSync();
@@ -25,9 +29,8 @@ void _editJustFile() => Directory('.').list(followLinks: false).map((file) {
     }).toList();
 
 void _genClasses() {
-  if (!Directory('assets/translations').existsSync()) {
-    Directory('assets').create();
-    Directory('assets/translations').create();
+  if (!Locations.translationDir.existsSync()) {
+    Locations.translationDir.create(recursive: true);
 
     print(
         "No locale files found yet. Please provide your Locale files in the directory 'assets/translations/'");
@@ -65,28 +68,23 @@ void _genClasses() {
 
   print("selected locale: ${fileNames[defaultLocaleNum]}");
 
-  Directory('lib/inu_classes').create();
+  Locations.classesDir.create();
 
   // generate Inu superclass
   final LocaleGenerator inu = genLocale(
       superClass: true,
-      localeCode: fileNames[defaultLocaleNum].replaceFirst('.yaml', ''));
+      localeCode: fileNames[defaultLocaleNum]
+          .replaceFirst(Locations.yamlFileSuffix, ''));
 
   // build locale class for every localization file that extends Inu
   regenClasses(superClass: inu);
 }
 
-List<String> _getLocalFileNames() {
-  List<String> files = [];
-  for (var file in Directory('assets/translations')
-      .listSync(followLinks: false)
-      .toList()) {
-    if (basename(file.path).contains('.yaml')) {
-      files.add(basename(file.path));
-    }
-  }
-  return files;
-}
+List<String> _getLocalFileNames() => Locations.translationDir
+    .listSync(followLinks: false)
+    .where((e) => e.isYaml)
+    .map((e) => e.basename)
+    .toList();
 
 void initInu() {
   _genClasses();
