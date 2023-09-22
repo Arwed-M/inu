@@ -6,3 +6,9 @@ Create Inu 🐕
 
 - clean empty keys after key removal from Inu class
 - bug fixes
+
+## 1.0.0
+
+- allow locale selection through enum
+- subclasses are private now
+- allow sublevel keys

@@ -1,6 +1,6 @@
 name: inu
 description: A localization tool for Flutter apps based on class generation.
-version: 0.1.0
+version: 1.0.0 
 homepage: https://github.com/Arwed-M/inu
 
 environment:
