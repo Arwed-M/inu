@@ -7,6 +7,9 @@ import 'constants.dart';
 extension FileSystemExtensions on FileSystemEntity {
   bool get isYaml => basename.endsWith(Locations.yamlFileSuffix);
   String get basename => pathlib.basename(path);
+
+  String get basenameNoSuffix =>
+      basename.replaceAll(Locations.yamlFileSuffix, '');
 }
 
 extension InuStrExtensions on String {

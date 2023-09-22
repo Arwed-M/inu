@@ -10,7 +10,7 @@ class Locations {
 
   static File get generatedFile => File(generatedFilePath);
 
-  static File localeFile(String localeCode) =>
+  static File localeYamlFile(String localeCode) =>
       File('$translationDirPath/$localeCode$yamlFileSuffix');
 
   static Directory get classesDir => Directory("lib/inu_classes");

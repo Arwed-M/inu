@@ -50,19 +50,12 @@ if you use [just](https://github.com/casey/just).
 
 Once the classes have been generated, you can move on by using an instance of **Inu** as a Container for all your Strings.  
 
-You can write a method like this and store the returned value as a global variable or within a state management system like [get_it](https://pub.dev/packages/get_it):
+Translations for a specific language can be selected through the InuLocale enum.
 
 ```dart
 Inu chooseLocale() {
-  final String langCode =
-      Locale(Platform.localeName).languageCode.replaceAll('_', '-');
-
-  switch (langCode) {
-    case 'de-DE':
-      return DeDE();
-    default:
-      return EnUS();
-  }
+  final String locale = Locale(Platform.localeName).languageCode;
+  return InuLocale.select(locale) ?? InuLocale.en_US.inu;
 }
 ```
 

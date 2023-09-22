@@ -6,7 +6,7 @@ import 'dart:io';
 import 'package:inu/src/translation.dart';
 import 'package:yaml_mapper/yaml_mapper.dart';
 
-import 'constants.dart';
+import 'fs_utils.dart';
 import 'locale_generator.dart';
 
 void checkCompleteness(LocaleGenerator superLocale, LocaleGenerator locale) {
@@ -19,8 +19,8 @@ void checkCompleteness(LocaleGenerator superLocale, LocaleGenerator locale) {
       locale.localeCode);
 
   if (missingKeys.isNotEmpty) {
-    _printMissingStringsAndPrompt(missingKeys, locale.localeCode);
-    String? answer = stdin.readLineSync(encoding: utf8)?.trim();
+    //_printMissingStringsAndPrompt(missingKeys, locale.localeCode);
+    String? answer = "n" ?? stdin.readLineSync(encoding: utf8)?.trim();
     if (answer != null && RegExp("(y|Y|j|J)").hasMatch(answer)) {
       _genLocalization(
           _addMissingKeysToYaml(missingKeys, locale.yaml, superLocale.yaml,
@@ -52,12 +52,9 @@ Yaml _addMissingKeysToYaml(Set<String> missingKeys, Yaml yaml, Yaml superYaml,
 
 void _genLocalization(Yaml yaml, String localeCode) {
   final locale = LocaleGenerator(yaml, localeCode: localeCode);
-  _createClassFile(locale.localeCode, locale.localeCode);
-  writeYAML(locale.yaml, 'assets/translations/${locale.localeCode}.yaml');
+  FS.writeLocaleFile(locale.localeCode, locale.generatedClass);
+  FS.updateYamlFile(localeCode, locale.yaml);
 }
-
-void _createClassFile(String className, String contents) =>
-    Locations.classFile(className).writeAsStringSync(contents);
 
 /// Finds all keys that aren't translated in the locale files
 Set<String> findMissingKeys(

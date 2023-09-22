@@ -32,11 +32,11 @@ class LocaleGenerator {
       ].join();
 
   /// generate a new class from a [Map<String, dynamic>]
-  void _genClass(List<String> path, Yaml map) =>
+  void _genClass(KeyPath path, Yaml map) =>
       classes.add(_gen.classStructure(
           path,
           map.keys
-              .map((key) => _genAttribute(key, map, path: List.from(path)))
+              .map((key) => _genAttribute(key, map, path: path.toList()))
               .join()));
 
   /// generate the attributes of a class based on the type of the YAML key
