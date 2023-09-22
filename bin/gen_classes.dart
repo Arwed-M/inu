@@ -1,41 +1,30 @@
-import 'dart:io';
-
-import 'package:path/path.dart';
-
 import 'completeness_check.dart';
-import 'constants.dart';
-import 'gen_locale.dart';
+import 'extensions.dart';
+import 'fs_utils.dart';
 import 'init.dart';
 import 'locale_generator.dart';
 
-void regenClasses({LocaleGenerator? superClass}) {
-  final bool initHasBeenRun = !Locations.classesDir.existsSync() ||
-      !File(Locations.generatedFilePath).existsSync();
+LocaleGenerator genLocale(
+    {required String localeCode, bool superClass = false}) {
+  final locale = LocaleGenerator(FS.readYamlFile(localeCode),
+      localeCode: localeCode, superClass: superClass);
+  FS.writeLocaleFile(!superClass ? localeCode : 'inu', locale.generatedClass);
+  return locale;
+}
 
-  if (initHasBeenRun) {
+void regenClasses({LocaleGenerator? superClass}) {
+  if (!FS.inuIsConfigured) {
     initInu();
     return;
   }
 
-  if (superClass == null) {
-    final String superClassLocaleCode = Locations.generatedFile
-        .readAsLinesSync()
-        .first
-        .replaceFirst('/// ', '');
-
-    superClass = genLocale(superClass: true, localeCode: superClassLocaleCode);
-  }
+  superClass ??=
+      genLocale(superClass: true, localeCode: FS.superClassLocaleCode);
 
   // build locale class for every localization file that extends Inu
-  Locations.translationDir.list(followLinks: false).map((file) {
-    final String fileName = basename(file.path);
-    if (fileName.contains(Locations.yamlFileSuffix)) {
-      checkCompleteness(
-          superClass!,
-          genLocale(
-              localeCode: fileName.replaceAll(Locations.yamlFileSuffix, '')));
-    }
-  }).toList();
+  for (var file in FS.getYamlFiles) {
+    checkCompleteness(superClass, genLocale(localeCode: file.basenameNoSuffix));
+  }
 }
 
 void main() {
