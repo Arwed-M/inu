@@ -19,8 +19,8 @@ void checkCompleteness(LocaleGenerator superLocale, LocaleGenerator locale) {
       locale.localeCode);
 
   if (missingKeys.isNotEmpty) {
-    //_printMissingStringsAndPrompt(missingKeys, locale.localeCode);
-    String? answer = "n" ?? stdin.readLineSync(encoding: utf8)?.trim();
+    _printMissingStringsAndPrompt(missingKeys, locale.localeCode);
+    String? answer = stdin.readLineSync(encoding: utf8)?.trim();
     if (answer != null && RegExp("(y|Y|j|J)").hasMatch(answer)) {
       _genLocalization(
           _addMissingKeysToYaml(missingKeys, locale.yaml, superLocale.yaml,
