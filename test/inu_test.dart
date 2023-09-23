@@ -4,7 +4,8 @@ import 'package:inu/src/extensions.dart';
 import 'package:yaml_mapper/yaml_mapper.dart';
 
 import '../bin/completeness_check.dart';
-import '../bin/locale_generator.dart';
+import '../bin/init.dart';
+import '../bin/models/node.dart';
 
 void main() {
   const String yamlStrEN = """
@@ -35,6 +36,8 @@ end: das ist das Ende
 """;
 
   group("inu tests", () {
+    initInu();
+
     final List<String> yamlLinesEN = yamlStrEN.split('\n');
     final Map<String, dynamic> mapEN =
         parseMap(yamlLinesEN, determineWhitespace(yamlLinesEN));
@@ -48,10 +51,9 @@ end: das ist das Ende
     });
 
     group('Class generation', () {
-      final inu = LocaleGenerator(mapEN, localeCode: 'en-US', superClass: true);
-
+      final inu = SuperClass(yaml: mapEN, locale: 'en-US');
       final Map<String, dynamic> mapDE = parseMap(yamlStrDE.split('\n'), '  ');
-      final localeDE = LocaleGenerator(mapDE, localeCode: 'de-DE');
+      final localeDE = LocaleClass(yaml: mapDE, locale: 'de-DE');
 
       test('Superclass', () {
         expect(inu.keys, [
@@ -65,8 +67,7 @@ end: das ist das Ende
       });
 
       test('Uncomplete locale class', () {
-        expect(
-            findMissingKeys(inu, localeDE).toList(), ['section1.anotherKey']);
+        expect(inu.keysNotIn(localeDE).toList(), ['section1.anotherKey']);
       });
     });
 
