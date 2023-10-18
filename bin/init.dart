@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:io' show stdin;
 import 'fs_utils.dart';
 import 'gen_classes.dart';
-import 'locale_generator.dart';
+import 'models/node.dart';
 
 void _genClasses() {
   if (!FS.translationDirExists) {
@@ -49,9 +49,10 @@ void _genClasses() {
   FS.genClassesDir();
 
   // generate Inu superclass
-  final LocaleGenerator inu = genLocale(
-      superClass: true,
-      localeCode: fileNames[defaultLocaleNum]);
+  final locale = fileNames[defaultLocaleNum];
+  final inu = SuperClass(
+    yaml: FS.readYamlFile(locale),
+      locale: fileNames[defaultLocaleNum]);
 
   // build locale class for every localization file that extends Inu
   regenClasses(superClass: inu);
