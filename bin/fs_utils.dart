@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:yaml_mapper/yaml_mapper.dart';
-
-import 'extensions.dart';
-import 'locale_generator.dart';
+import 'package:path/path.dart' as pathlib;
+import 'models/node.dart';
 
 class _Locations {
   static String _classFileTemplate(String locale) =>
@@ -58,9 +56,7 @@ class FS {
   }
 
   static void genTranslationDir() {
-    if (!translationDirExists) {
-      _Locations.translationDir.create(recursive: true);
-    }
+    _Locations.translationDir.create(recursive: true);
   }
 
   static String get superClassLocaleCode =>
@@ -85,4 +81,12 @@ class FS {
         content += '\ninu:\n  dart run inu:gen_classes';
         file.writeAsStringSync(content);
       });
+}
+
+extension FileSystemExtensions on FileSystemEntity {
+  bool get isYaml => basename.endsWith(_Locations.yamlFileSuffix);
+  String get basename => pathlib.basename(path);
+
+  String get basenameNoSuffix =>
+      basename.replaceAll(_Locations.yamlFileSuffix, '');
 }

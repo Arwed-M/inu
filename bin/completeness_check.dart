@@ -7,25 +7,24 @@ import 'package:inu/src/translation.dart';
 import 'package:yaml_mapper/yaml_mapper.dart';
 
 import 'fs_utils.dart';
-import 'locale_generator.dart';
+import 'models/node.dart';
 
-void checkCompleteness(LocaleGenerator superLocale, LocaleGenerator locale) {
-  Set<String> missingKeys = findMissingKeys(superLocale, locale);
+void checkCompleteness(SuperClass superLocale, LocaleClass locale) {
+  Set<String> missingKeys = superLocale.keysNotIn(locale);
 
-  _cleanEmptyKeys(locale);
+  final yaml = _cleanEmptyKeys(superLocale, locale);
 
-  _genLocalization(
-      _addMissingKeysToYaml(missingKeys, locale.yaml, superLocale.yaml),
-      locale.localeCode);
+  _genLocalization(_addMissingKeysToYaml(missingKeys, yaml, superLocale.yaml),
+      locale.locale);
 
   if (missingKeys.isNotEmpty) {
-    _printMissingStringsAndPrompt(missingKeys, locale.localeCode);
+    _printMissingStringsAndPrompt(missingKeys, locale.locale);
     String? answer = stdin.readLineSync(encoding: utf8)?.trim();
     if (answer != null && RegExp("(y|Y|j|J)").hasMatch(answer)) {
       _genLocalization(
-          _addMissingKeysToYaml(missingKeys, locale.yaml, superLocale.yaml,
+          _addMissingKeysToYaml(missingKeys, yaml, superLocale.yaml,
               promtTranslation: true),
-          locale.localeCode);
+          locale.locale);
     }
   }
 }
@@ -34,7 +33,9 @@ void _printMissingStringsAndPrompt(Set<String> missingKeys, String lang) {
   print(
       "\nFound ${missingKeys.length} missing translation${missingKeys.length > 1 ? "s" : ""} for $lang:");
 
-  for (var key in missingKeys) print("  - $key");
+  for (var key in missingKeys) {
+    print("  - $key");
+  }
 
   print('\nDo you wish to translate them? [y/n]');
 }
@@ -51,21 +52,27 @@ Yaml _addMissingKeysToYaml(Set<String> missingKeys, Yaml yaml, Yaml superYaml,
 }
 
 void _genLocalization(Yaml yaml, String localeCode) {
-  final locale = LocaleGenerator(yaml, localeCode: localeCode);
-  FS.writeLocaleFile(locale.localeCode, locale.generatedClass);
-  FS.updateYamlFile(localeCode, locale.yaml);
+  FS.writeLocaleFile(
+      localeCode, LocaleClass(yaml: yaml, locale: localeCode).renderDartFile());
+  FS.updateYamlFile(localeCode, yaml);
 }
-
-/// Finds all keys that aren't translated in the locale files
-Set<String> findMissingKeys(
-        LocaleGenerator superClass, LocaleGenerator locale) =>
-    superClass.keys.difference(locale.keys);
 
 /// Removes all empty keys in locale files which are not declared in Inu superclass.
 /// Returns true if keys have been removed
-bool _cleanEmptyKeys(LocaleGenerator locale) {
-  locale.nullKeys
-      .map((key) => removeFromMap(locale.yaml, key.split('.')))
-      .toList();
-  return locale.nullKeys.isNotEmpty;
+Yaml _cleanEmptyKeys(LocaleClass superLocale, LocaleClass locale) {
+  final yaml = locale.yaml;
+  locale
+      .keysNotIn(superLocale)
+      .forEach((key) => removeFromMap(yaml, key.split('.')));
+  return yaml;
+}
+
+extension LocaleClassExtensions on LocaleClass {
+  Yaml get yaml => FS.readYamlFile(locale);
+
+  Set<String> keysNotIn(LocaleClass other) {
+    final keys = this.keys;
+    keys.removeAll(other.keys);
+    return keys;
+  }
 }
