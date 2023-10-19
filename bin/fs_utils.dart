@@ -4,25 +4,20 @@ import 'package:path/path.dart' as pathlib;
 import 'models/node.dart';
 
 class _Locations {
-  static String _classFileTemplate(String locale) =>
-      "lib/inu_classes/$locale.g.dart";
+  static const String yamlFileSuffix = ".yaml";
+  static const String translationDirPath = "assets/translations";
 
-  static String get generatedFilePath => _classFileTemplate("inu");
-  static File classFile(String className) =>
-      File(_classFileTemplate(className));
+  static Directory get classesDir => Directory("lib/inu_classes");
+  static Directory get translationDir => Directory(translationDirPath);
+  static String get superClassFilePath => _classFilePath("inu");
+  static File get superClassFile => File(superClassFilePath);
 
-  static File get generatedFile => File(generatedFilePath);
-
+  static File classFile(String className) => File(_classFilePath(className));
   static File localeYamlFile(String localeCode) =>
       File('$translationDirPath/$localeCode$yamlFileSuffix');
 
-  static Directory get classesDir => Directory("lib/inu_classes");
-
-  static const String translationDirPath = "assets/translations";
-
-  static Directory get translationDir => Directory(translationDirPath);
-
-  static const yamlFileSuffix = ".yaml";
+  static String _classFilePath(String locale) =>
+      "lib/inu_classes/$locale.g.dart";
 }
 
 class FS {
@@ -40,13 +35,13 @@ class FS {
   static void writeLocaleFile(String locale, String content) =>
       _Locations.classFile(locale).writeAsStringSync(content);
 
-  static Yaml readYamlFile(String locale) {
+  static Yaml readLocaleFile(String locale) {
     final lines = _Locations.localeYamlFile(locale).readAsLinesSync();
     return parseMap(lines, determineWhitespace(lines));
   }
 
   static bool get inuIsConfigured => !(!_Locations.classesDir.existsSync() ||
-      !File(_Locations.generatedFilePath).existsSync());
+      !File(_Locations.superClassFilePath).existsSync());
 
   static bool get translationDirExists =>
       _Locations.translationDir.existsSync();
@@ -59,8 +54,10 @@ class FS {
     _Locations.translationDir.create(recursive: true);
   }
 
-  static String get superClassLocaleCode =>
-      _Locations.generatedFile.readAsLinesSync().first.replaceFirst('/// ', '');
+  static String get superClassLocaleCode => _Locations.superClassFile
+      .readAsLinesSync()
+      .first
+      .replaceFirst('/// ', '');
 
   static void updateYamlFile(String localeCode, Yaml yaml) =>
       writeYAML(yaml, _Locations.localeYamlFile(localeCode).path);

@@ -1,7 +1,8 @@
 import 'package:flutter/widgets.dart';
 
+/// provide named/unnamed arguments to a [String] or a [Text]
+
 extension StringInputExtension on String {
-  /// Replaces all '{}' with the [List<String> args] from first to last
   String tr(
       {List<String> args = const [],
       Map<String, String> namedArgs = const {}}) {
@@ -20,7 +21,6 @@ extension StringInputExtension on String {
 }
 
 extension TextInputExtension on Text {
-  /// Replaces all '{}' with the [List<String> args] from first to last
   Text tr(
           {List<String> args = const [],
           Map<String, String> namedArgs = const {}}) =>

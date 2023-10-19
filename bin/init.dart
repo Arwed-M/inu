@@ -51,8 +51,7 @@ void _genClasses() {
   // generate Inu superclass
   final locale = fileNames[defaultLocaleNum];
   final inu = SuperClass(
-    yaml: FS.readYamlFile(locale),
-      locale: fileNames[defaultLocaleNum]);
+      yaml: FS.readLocaleFile(locale), locale: fileNames[defaultLocaleNum]);
 
   // build locale class for every localization file that extends Inu
   regenClasses(superClass: inu);

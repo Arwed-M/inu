@@ -68,11 +68,7 @@ Yaml _cleanEmptyKeys(LocaleClass superLocale, LocaleClass locale) {
 }
 
 extension LocaleClassExtensions on LocaleClass {
-  Yaml get yaml => FS.readYamlFile(locale);
+  Yaml get yaml => FS.readLocaleFile(locale);
 
-  Set<String> keysNotIn(LocaleClass other) {
-    final keys = this.keys;
-    keys.removeAll(other.keys);
-    return keys;
-  }
+  Set<String> keysNotIn(LocaleClass other) => keys.difference(other.keys);
 }

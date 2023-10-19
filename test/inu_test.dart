@@ -36,8 +36,6 @@ end: das ist das Ende
 """;
 
   group("inu tests", () {
-    initInu();
-
     final List<String> yamlLinesEN = yamlStrEN.split('\n');
     final Map<String, dynamic> mapEN =
         parseMap(yamlLinesEN, determineWhitespace(yamlLinesEN));

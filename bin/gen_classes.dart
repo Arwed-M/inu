@@ -4,11 +4,11 @@ import 'init.dart';
 import 'models/node.dart';
 
 LocaleClass genLocale({required String localeCode, bool superClass = false}) {
-  final yaml = FS.readYamlFile(localeCode);
+  final yaml = FS.readLocaleFile(localeCode);
   final locale = superClass
       ? SuperClass(yaml: yaml, locale: localeCode)
       : LocaleClass(yaml: yaml, locale: localeCode);
-  FS.writeLocaleFile(!superClass ? localeCode : 'inu', locale.renderDartFile());
+  FS.writeLocaleFile(superClass ? 'inu' : localeCode, locale.renderDartFile());
   return locale;
 }
 
