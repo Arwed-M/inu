@@ -46,7 +46,7 @@ Yaml _addMissingKeysToYaml(Set<String> missingKeys, Yaml yaml, Yaml superYaml,
     final List<String> keyPath = missingKey.split('.');
     yaml = promtTranslation
         ? translate(keyPath, getPathValue(keyPath, superYaml).trim(), yaml)
-        : addPathToMap(yaml, keyPath, null);
+        : addValToMap(yaml, keyPath, null);
   }
   return yaml;
 }

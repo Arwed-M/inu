@@ -4,7 +4,6 @@ import 'package:inu/src/extensions.dart';
 import 'package:yaml_mapper/yaml_mapper.dart';
 
 import '../bin/completeness_check.dart';
-import '../bin/init.dart';
 import '../bin/models/node.dart';
 
 void main() {

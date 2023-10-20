@@ -179,10 +179,9 @@ packages:
   yaml_mapper:
     dependency: "direct main"
     description:
-      name: yaml_mapper
-      sha256: "5734e07d2d750c6bf68172320f2872311c3a920ffb13a7652a19718894fcaf17"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../yaml_mapper"
+      relative: true
+    source: path
     version: "0.0.4"
 sdks:
   dart: ">=3.1.0-185.0.dev <4.0.0"

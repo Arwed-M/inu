@@ -60,7 +60,8 @@ class FS {
       .replaceFirst('/// ', '');
 
   static void updateYamlFile(String localeCode, Yaml yaml) =>
-      writeYAML(yaml, _Locations.localeYamlFile(localeCode).path);
+      File(_Locations.localeYamlFile(localeCode).path)
+          .writeAsStringSync(toYaml(yaml));
 
   static void addJustfileEntry() => Directory('.')
           .list(followLinks: false)
